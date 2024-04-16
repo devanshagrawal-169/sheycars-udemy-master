@@ -22,6 +22,7 @@ function BookingCar({ match }) {
   const [driver, setdriver] = useState(false);
   const [totalAmount, setTotalAmount] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [totalDays, setTotalDays] = useState(0)
 
   useEffect(() => {
     if (cars.length == 0) {
@@ -32,17 +33,17 @@ function BookingCar({ match }) {
   }, [cars]);
 
   useEffect(() => {
-    setTotalAmount(totalHours * car.rentPerHour);
+    setTotalAmount(totalDays * car.rentPerHour);
     if (driver) {
-      setTotalAmount(totalAmount + 30 * totalHours);
+      setTotalAmount(totalAmount + 300 * totalDays);
     }
-  }, [driver, totalHours]);
+  }, [driver, totalDays]);
 
   function selectTimeSlots(values) {
     setFrom(moment(values[0]).format('MMM DD yyyy HH:mm'));
     setTo(moment(values[1]).format('MMM DD yyyy HH:mm'));
 
-    setTotalHours(values[1].diff(values[0], 'hours'));
+    setTotalDays((values[1]).diff(values[0], 'days')+1);
   }
 
   function onToken(token) {
@@ -50,7 +51,7 @@ function BookingCar({ match }) {
       token,
       user: JSON.parse(localStorage.getItem('user'))._id,
       car: car._id,
-      totalHours,
+      totalDays,
       totalAmount,
       driverRequired: driver,
       bookedTimeSlots: {
@@ -85,7 +86,7 @@ function BookingCar({ match }) {
           </Divider>
           <div style={{ textAlign: 'right' }}>
             <p>{car.name}</p>
-            <p>{car.rentPerHour}/- Rent Per hour</p>
+            <p>{car.rentPerHour}/- Rent Per Day</p>
             <p>Fuel Type : {car.fuelType}</p>
             <p>Max Persons : {car.capacity}</p>
           </div>
@@ -110,10 +111,10 @@ function BookingCar({ match }) {
           {from && to && (
             <div>
               <p>
-                Total Hours : <b>{totalHours}</b>
+                Total Days : <b>{totalDays}</b>
               </p>
               <p>
-                Rent Per Hour : <b>{car.rentPerHour}</b>
+                Rent Per Day : <b>{car.rentPerHour}</b>
               </p>
               <Checkbox
                 onChange={(e) => {
@@ -124,7 +125,7 @@ function BookingCar({ match }) {
                   }
                 }}
               >
-                Driver Required
+                Driver Required 
               </Checkbox>
 
               <h3>Total Amount : {totalAmount}</h3>

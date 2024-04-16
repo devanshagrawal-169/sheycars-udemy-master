@@ -2,6 +2,18 @@ const express = require("express");
 const router = express.Router();
 const Car = require("../models/carModel");
 
+router.get("/mycars", async (req, res) => {
+  try {
+    const cars = await Car.find({ uploadedBy: req.user._id });
+    if(!cars){
+      res.send("No  Cars Found!");
+    }
+    res.send(cars)
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+}); 
+
 router.get("/getallcars", async (req, res) => {
   try {
     const cars = await Car.find();
