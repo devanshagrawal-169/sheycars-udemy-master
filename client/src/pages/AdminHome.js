@@ -36,7 +36,7 @@ function AdminHome() {
           <div className="d-flex justify-content-between align-items-center">
             <h1 className="text-center mt-2">My List</h1>
             <button className="btn1">
-              <a href={addnewCarLink}>ADD CAR</a>
+              <a href={addnewCarLink}>ADD VEHICLE</a>
             </button>
           </div>
         </Col>

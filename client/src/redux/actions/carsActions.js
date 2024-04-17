@@ -20,10 +20,10 @@ export const getMyCars = () => async dispatch => {
     dispatch({ type: 'LOADING', payload: true });
 
     try {
-        const token = localStorage.getItem('user'); 
+        const token = localStorage.getItem('user');
         const response = await axios.get('/api/cars/mycars', {
             headers: {
-                Authorization: `Bearer ${token}` 
+                Authorization: `Bearer ${token}`
             }
         });
         dispatch({ type: 'GET_MY_CARS', payload: response.data });
@@ -40,7 +40,11 @@ export const addCar = (reqObj) => async dispatch => {
     dispatch({ type: 'LOADING', payload: true })
 
     try {
-        await axios.post('/api/cars/addcar', reqObj)
+         const token = localStorage.getItem('user');
+        await axios.post('/api/cars/addcar', reqObj,{headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
 
         dispatch({ type: 'LOADING', payload: false })
         message.success('New car added successfully')

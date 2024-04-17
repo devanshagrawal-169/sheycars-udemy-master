@@ -32,7 +32,7 @@ function DefaultLayout(props) {
         <a href="/userbookings">Bookings</a>
       </Menu.Item>
       <Menu.Item>
-        <a href="/admin">Admin</a>
+        <a href="/admin">My vehicles</a>
       </Menu.Item>
       <Menu.Item
         onClick={() => {
