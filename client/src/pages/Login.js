@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Row, Col, Form, Input, message } from 'antd'; // Import message from antd
+import React from 'react';
+import { Row, Col, Form, Input } from 'antd';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../redux/actions/userActions';
@@ -8,27 +8,13 @@ import Spinner from '../components/Spinner';
 import 'aos/dist/aos.css'; // You can also use <link> for styles
 // ..
 AOS.init();
-
 function Login() {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.alertsReducer);
-  const [loginError, setLoginError] = useState(false); // State to track login error
-
-  const onFinish = async (values) => {
-    dispatch(userLogin(values))
-      .then((response) => {
-        if (!response.success) {
-          setLoginError(true); // Set login error state to true
-          message.error('Invalid username or password'); // Show error message
-        }
-      })
-      .catch((error) => {
-        console.error('Login failed:', error);
-        setLoginError(true); // Set login error state to true
-         // Show error message
-      });
-  };
-
+  function onFinish(values) {
+    dispatch(userLogin(values));
+    console.log(values);
+  }
   return (
     <div className="login">
       {loading && <Spinner />}
@@ -39,26 +25,33 @@ function Login() {
             data-aos="slide-right"
             data-aos-duration="1500"
             src="https://www.shutterstock.com/image-photo/highway-traffic-sunset-road-metal-600nw-1158115840.jpg"
-            alt="Highway"
           />
           <h1 className="login-logo">Road Connect</h1>
         </Col>
         <Col lg={8} className="text-left p-5">
-          <Form layout="vertical" className="login-form p-5" onFinish={onFinish}>
+          <Form
+            layout="vertical"
+            className="login-form p-5"
+            onFinish={onFinish}
+          >
             <h1>Login</h1>
             <hr />
-            <Form.Item name="username" label="Username" rules={[{ required: true }]}>
+            <Form.Item
+              name="username"
+              label="Username"
+              rules={[{ required: true }]}
+            >
               <Input />
             </Form.Item>
-            <Form.Item name="password" label="Password" rules={[{ required: true }]}>
+            <Form.Item
+              name="password"
+              label="Password"
+              rules={[{ required: true }]}
+            >
               <Input type="password" />
             </Form.Item>
 
-            <button className="btn1 mt-2" type="submit">
-              Login
-            </button>
-
-            {loginError && <p style={{ color: 'red' }}>Invalid username or password</p>} {/* Display error message if loginError is true */}
+            <button className="btn1 mt-2">Login</button>
 
             <hr />
 
